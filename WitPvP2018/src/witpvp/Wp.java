@@ -1,5 +1,6 @@
 package witpvp;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,39 +13,61 @@ public class Wp extends JavaPlugin {
 	
 	public static Wp plugin;
 	
-	private static Set<PlayerProfile> profiles = new HashSet<>();
-		
-	@Override
-	public void onLoad() {
-	}
+	private static Set<PlayerProfile> playerProfiles = new HashSet<>();
 	
-	@Override
-	public void onDisable() {			
-		plugin = null;
-	}
-	
+	// This method is called when the plugin is enabled
 	@Override
 	public void onEnable() {
 		plugin = this;		
-		new GlobalListener(plugin);
+
+		broadcast(ChatColor.YELLOW + "WitPvP core plugin enabled.");
+
+		new GlobalListener(plugin); // create globallistener to listen for events
 		
-		Bukkit.broadcastMessage("WitPvP plugin enabled.");
+		initializeCommands(); // see CommandListener
+	}
+	
+	// This method is called when the plugin is disabled
+	@Override
+	public void onDisable() {			
+		broadcast(ChatColor.YELLOW + "WitPvP core plugin enabled.");
+		
+		plugin = null;
+	}
+	
+	//Bukkit.broadcastMessage does not seem to work anymore, use this instead
+	public static void broadcast(String msg, Collection<? extends Player> players) {
+		for (Player p : players) {
+			p.sendMessage(msg);
+		}
+	}
+	
+	public static void broadcast(String msg) {
+		Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+		for (Player p : players) {
+			p.sendMessage(msg);
+		}
+	}
+	
+	private void initializeCommands() {
+		CommandListener cmdListener = new CommandListener();
+		getCommand("test").setExecutor(cmdListener);
 	}
 	
 	public static void addPlayerProfile(PlayerProfile profile) {
-		profiles.add(profile);
+		playerProfiles.add(profile);
 	}
 	
 	public static void removePlayerProfile(PlayerProfile profile) {
-		profiles.remove(profile);
+		playerProfiles.remove(profile);
 	}
 	
 	public static boolean hasPlayerProfile(PlayerProfile profile) {
-		return profiles.contains(profile);
+		return playerProfiles.contains(profile);
 	}
 	
 	public static PlayerProfile getPlayerProfile(Player player) {
-		for (PlayerProfile p : profiles) {
+		for (PlayerProfile p : playerProfiles) {
 			if (p.getPlayer().equals(player)) {
 				return p;
 			}
