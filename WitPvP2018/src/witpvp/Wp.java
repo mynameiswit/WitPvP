@@ -26,7 +26,9 @@ public class Wp extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;		
-		Bukkit.broadcastMessage(ChatColor.YELLOW + "WitPvP2018 core plugin enabled.");
+		new GlobalListener(plugin);
+		
+		Bukkit.broadcastMessage("WitPvP plugin enabled.");
 	}
 	
 	public static void addPlayerProfile(PlayerProfile profile) {

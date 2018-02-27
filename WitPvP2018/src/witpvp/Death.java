@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -73,9 +74,14 @@ public final class Death {
 	
 	@SuppressWarnings("deprecation")
 	public static void respawnPlayer(Player player) {
-		
+			// Set to normal combat stats
 			Util.setAttributes(player, PlayerAttributes.DEFAULT);
-			player.teleport(player.getBedSpawnLocation());
+			
+			// Teleport player to the world's spawnpoint
+			// (REPLACE WITH REAL RESPAWN CODE LATER)
+			Location spawnLocation = player.getBedSpawnLocation();
+			player.teleport(spawnLocation);
+			
 			player.playSound(player.getLocation(), Sound.ENTITY_EVOCATION_ILLAGER_CAST_SPELL, 0.5f, 1.0f);
 			
 	}
