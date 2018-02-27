@@ -48,18 +48,20 @@ public class CommandListener implements CommandExecutor {
 					}
 				}
 			} else if (cmdName.equalsIgnoreCase("hook")) {
-				for (Match activeMatch : Wp.getMatches()) {
-					if (activeMatch.getID() == Integer.parseInt(args[0])) {
-						int id = Integer.parseInt(args[0]);
-						if (hook(sender, id)) {
-							sender.sendMessage(ChatColor.GREEN + "You are now hooked onto match " + id + ".");
+				if (args.length == 1 && StringUtils.isNumeric(args[0])) {
+					for (Match activeMatch : Wp.getMatches()) {
+						if (activeMatch.getID() == Integer.parseInt(args[0])) {
+							int id = Integer.parseInt(args[0]);
+							if (hook(sender, id)) {
+								sender.sendMessage(ChatColor.GREEN + "You are now hooked onto match " + id + ".");
+							}
+							return true;
+							
 						}
-						return true;
-						
-					} else {
-						return false;
-						
 					}
+				} else {
+					return false;
+					
 				}
 			} else if (cmdName.equalsIgnoreCase("release")) {
 				if (args.length == 0) {
@@ -67,6 +69,8 @@ public class CommandListener implements CommandExecutor {
 						release(sender);
 						sender.sendMessage(ChatColor.GREEN + "Hook released.");
 						return true;
+					} else {
+						sender.sendMessage(ChatColor.GREEN + "You are not currently hooked.");
 					}
 				} else {
 					return false;
