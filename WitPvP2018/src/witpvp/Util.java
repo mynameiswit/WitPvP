@@ -30,34 +30,22 @@ public final class Util {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static final void setAttributes(Player player, PlayerAttributes attributes) {
-		double maxHealth = 20;
+	public static final void resetAttributes(Player player) {
 		float walkSpeed = 0.2f;
-		GameMode gameMode = GameMode.SURVIVAL;
-		
-		switch (attributes) {
-		case IN_LOBBY: 
-			gameMode = GameMode.ADVENTURE;
-			break;
-		case IN_ROUND: 
-			gameMode = GameMode.ADVENTURE;
-			maxHealth = GameConstants.Attributes.MAX_HEALTH;
-			break;
-		default:
-			break;
-		}
-		
-		player.setMaxHealth(maxHealth);
+		GameMode gameMode = GameMode.ADVENTURE;
+
+		player.setMaxHealth(20);
         player.setHealth(player.getMaxHealth());
         player.setWalkSpeed(walkSpeed);
+        //player.setFlySpeed(flySpeed);
         player.setGameMode(gameMode);
+        player.setFoodLevel(20);
         removeAllPotionEffects(player);
     }
 	
 	public static final void removeAllPotionEffects(Player player) {
 		for (PotionEffect effect : player.getActivePotionEffects()) {
 			player.removePotionEffect(effect.getType());
-			//player.addPotionEffect(new PotionEffect(effect.getType(), 0, effect.getAmplifier()), true);
 		}
 	}
 

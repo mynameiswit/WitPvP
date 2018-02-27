@@ -28,22 +28,31 @@ public final class Death {
 	@SuppressWarnings("deprecation")
 	public static void killPlayer(Player player, int respawnTime) {	
 		if (!deadPlayers.contains(player)) {
+			// Keep track of the dead players
 			deadPlayers.add(player);
 			
+			// Call the event so other listeners know that a player has died
 			PlayerDeathEvent event = new PlayerDeathEvent(player, null, 0, "");
 			Bukkit.getServer().getPluginManager().callEvent(event);
 			
 			GameMode gameMode = player.getGameMode();
 			float flySpeed = player.getFlySpeed();
 
-			Util.hidePlayer(player, player.getWorld().getPlayers());
+			//Util.hidePlayer(player, player.getWorld().getPlayers());
 			player.setHealth(player.getMaxHealth());
+			
+			// Sound
 			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_DEATH, 1.0f, 1.0f);
+			
+			// Visuals
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, respawnTime+20, 0, false, false), true);
-			player.setGameMode(GameMode.SPECTATOR);
+			player.setGameMode(GameMode.SPECTATOR); // make the player invisible
+			
+			// Make the player stop moving (might be buggy)
 			player.setFlySpeed(0);
 			player.setVelocity(new Vector(0, 0, 0));
 			
+			// Draw text on screen, and update the timer
 			player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + respawnTime/20 + ChatColor.WHITE + " seconds..." , 5, respawnTime-10, 0);
 			new BukkitRunnable() {
 				int ticksRemaining = respawnTime;
@@ -59,6 +68,7 @@ public final class Death {
 				}
 			}.runTaskTimer(Wp.plugin, 20, 20);	
 			
+			// When timer expires, restore player attributes and respawn
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -75,11 +85,13 @@ public final class Death {
 	@SuppressWarnings("deprecation")
 	public static void respawnPlayer(Player player) {
 			// Set to normal combat stats
-			Util.setAttributes(player, PlayerAttributes.DEFAULT);
+			Util.resetAttributes(player);
+			
+			//Util.showPlayer(player, player.getWorld().getPlayers());
 			
 			// Teleport player to the world's spawnpoint
 			// (REPLACE WITH REAL RESPAWN CODE LATER)
-			Location spawnLocation = player.getBedSpawnLocation();
+			Location spawnLocation = player.getWorld().getSpawnLocation();
 			player.teleport(spawnLocation);
 			
 			player.playSound(player.getLocation(), Sound.ENTITY_EVOCATION_ILLAGER_CAST_SPELL, 0.5f, 1.0f);
