@@ -14,8 +14,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import wpvp.Wp;
-
 public final class Death {
 	
 	private static final int RESPAWN_TIME = 60;
@@ -75,27 +73,10 @@ public final class Death {
 	
 	@SuppressWarnings("deprecation")
 	public static void respawnPlayer(Player player) {
-		if (Wp.isInRound(player)) {			
-			Util.showPlayer(player, Bukkit.getOnlinePlayers());
-			Util.clearInventory(player);
-			Util.setAttributes(player, PlayerAttributes.IN_ROUND);
-			
-			player.teleport(player.getBedSpawnLocation()); // replace with spawnpoint code
-			player.playSound(player.getLocation(), Sound.ENTITY_EVOCATION_ILLAGER_CAST_SPELL, 0.5f, 1.0f);
-			
-		} else if (Wp.isInMatch(player)) {			
-			Util.showPlayer(player, Bukkit.getOnlinePlayers());
-			Util.clearInventory(player);
-			Util.setAttributes(player, PlayerAttributes.IN_LOBBY);
-			
-			player.teleport(player.getBedSpawnLocation()); // replace with spawnpoint code
-			player.playSound(player.getLocation(), Sound.ENTITY_EVOCATION_ILLAGER_CAST_SPELL, 0.5f, 1.0f);
-			
-		} else {
+		
 			Util.setAttributes(player, PlayerAttributes.DEFAULT);
 			player.teleport(player.getBedSpawnLocation());
 			player.playSound(player.getLocation(), Sound.ENTITY_EVOCATION_ILLAGER_CAST_SPELL, 0.5f, 1.0f);
 			
-		}
 	}
 }

@@ -6,6 +6,8 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+import witpvp.constants.GameConstants;
+
 public final class Util {
 	@SuppressWarnings("deprecation")
 	public static void hidePlayer(Player player, Collection<? extends Player> players) {
