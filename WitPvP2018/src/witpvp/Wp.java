@@ -9,11 +9,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import witpvp.match.Match;
+
 public class Wp extends JavaPlugin {
 	
 	public static Wp plugin;
 	
 	private static Set<PlayerProfile> playerProfiles = new HashSet<>();
+	private static Set<Match> matches = new HashSet<Match>();
 	
 	// This method is called when the plugin is enabled
 	@Override
@@ -30,7 +33,7 @@ public class Wp extends JavaPlugin {
 	// This method is called when the plugin is disabled
 	@Override
 	public void onDisable() {			
-		broadcast(ChatColor.YELLOW + "WitPvP core plugin enabled.");
+		broadcast(ChatColor.YELLOW + "WitPvP core plugin disabled.");
 		
 		plugin = null;
 	}
@@ -52,6 +55,10 @@ public class Wp extends JavaPlugin {
 	private void initializeCommands() {
 		CommandListener cmdListener = new CommandListener();
 		getCommand("test").setExecutor(cmdListener);
+		getCommand("match").setExecutor(cmdListener);
+		getCommand("hook").setExecutor(cmdListener);
+		getCommand("release").setExecutor(cmdListener);
+
 	}
 	
 	public static void addPlayerProfile(PlayerProfile profile) {
@@ -73,5 +80,13 @@ public class Wp extends JavaPlugin {
 			}
 		}
 		return null;
+	}
+	
+	public static Set<Match> getMatches() {
+		return new HashSet<Match>(matches);
+	}
+	
+	public static void addMatch(Match match) {
+		matches.add(match);
 	}
 }

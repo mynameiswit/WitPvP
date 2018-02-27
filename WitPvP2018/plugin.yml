@@ -5,3 +5,12 @@ commands:
    test:
       description: temporary test command
       usage: /<command>
+   match:
+      description: Create, edit or delete a match.
+      usage: /<command> create
+   hook:
+      description: Hook onto a match so that other commands can be applied to that match.
+      usage: /<command> [MATCHID]
+   release:
+      description: Removes the current hook, so that commands are no longer match-specific.
+      usage: /<command>
