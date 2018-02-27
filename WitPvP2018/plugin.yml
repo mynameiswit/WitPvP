@@ -1,0 +1,8 @@
+name: WitPvP
+main : witpvp.Wp
+version: 0.1
+prefix: wp
+commands:
+   test:
+      description: temporary test command
+      usage: /<command>
