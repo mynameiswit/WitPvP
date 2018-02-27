@@ -21,6 +21,10 @@ public final class Death {
 	
 	private static final Set<Player> deadPlayers = new HashSet<>();
 	
+	public static boolean isDead(Player player) {
+		return deadPlayers.contains(player);
+	}
+	
 	public static void killPlayer(Player player) {
 		killPlayer(player, RESPAWN_TIME);
 	}
@@ -37,8 +41,8 @@ public final class Death {
 			
 			GameMode gameMode = player.getGameMode();
 			float flySpeed = player.getFlySpeed();
+			float walkSpeed = player.getWalkSpeed();
 
-			//Util.hidePlayer(player, player.getWorld().getPlayers());
 			player.setHealth(player.getMaxHealth());
 			
 			// Sound
@@ -46,10 +50,12 @@ public final class Death {
 			
 			// Visuals
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, respawnTime+20, 0, false, false), true);
-			player.setGameMode(GameMode.SPECTATOR); // make the player invisible
+			player.setGameMode(GameMode.SPECTATOR);
+			Util.hidePlayer(player, player.getWorld().getPlayers());
 			
-			// Make the player stop moving (might be buggy)
+			// Make the player unable to move, and stop moving
 			player.setFlySpeed(0);
+			player.setWalkSpeed(0);
 			player.setVelocity(new Vector(0, 0, 0));
 			
 			// Draw text on screen, and update the timer
@@ -72,11 +78,14 @@ public final class Death {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					player.setGameMode(gameMode);
-					player.setFlySpeed(flySpeed);
+					Util.showPlayer(player, player.getWorld().getPlayers());
 					
-					deadPlayers.remove(player);
+					player.setFlySpeed(flySpeed);
+					player.setWalkSpeed(walkSpeed);
+					player.setGameMode(gameMode);
+					
 					respawnPlayer(player);
+					deadPlayers.remove(player);
 				}
 			}.runTaskLater(Wp.plugin, respawnTime);
 		}

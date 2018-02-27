@@ -11,15 +11,21 @@ import witpvp.constants.GameConstants;
 public final class Util {
 	@SuppressWarnings("deprecation")
 	public static void hidePlayer(Player player, Collection<? extends Player> players) {
+		player.setCollidable(false);
 		for (Player p : players) {
-			p.hidePlayer(player);
+			if (player != p) {
+				p.hidePlayer(player);
+			}
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	public static void showPlayer(Player player, Collection<? extends Player> collection) {
+		player.setCollidable(true);
 		for (Player p : collection) {
-			p.showPlayer(player);
+			if (player != p) {
+				p.showPlayer(player);
+			}
 		}
 	}
 	
@@ -33,7 +39,8 @@ public final class Util {
 	public static final void resetAttributes(Player player) {
 		float walkSpeed = 0.2f;
 		GameMode gameMode = GameMode.ADVENTURE;
-
+		
+		clearInventory(player);
 		player.setMaxHealth(20);
         player.setHealth(player.getMaxHealth());
         player.setWalkSpeed(walkSpeed);
