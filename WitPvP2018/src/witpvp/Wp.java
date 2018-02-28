@@ -29,6 +29,7 @@ public class Wp extends JavaPlugin {
 		new GlobalListener(plugin); // create globallistener to listen for events TODO temporary
 		
 		initializeCommands(); // see CommandListener
+		loadWorlds(); // make all worlds show up in world list
 	}
 	
 	// This method is called when the plugin is disabled
