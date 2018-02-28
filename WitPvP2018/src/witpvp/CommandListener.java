@@ -45,6 +45,37 @@ public class CommandListener implements CommandExecutor {
 						}
 						return true;
 						
+					} else if (args[0].equalsIgnoreCase("end")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							match.end();
+							
+							sender.sendMessage("Ended match " + match.getID() + ".");
+							return true;
+							
+						} else {
+							return false;
+							
+						}
+					}
+				}
+			} else if (cmdName.equalsIgnoreCase("round")) {
+				if (args.length == 0) {
+					return false;
+					
+				} else if (args.length == 1) {
+					if (args[0].equalsIgnoreCase("create")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							match.newRound();
+							
+							sender.sendMessage("Started a new round in match " + match.getID() + ".");
+							return true;
+							
+						} else {
+							return false;
+							
+						}
 					}
 				}
 			} else if (cmdName.equalsIgnoreCase("hook")) {
