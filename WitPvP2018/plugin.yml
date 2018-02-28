@@ -7,10 +7,13 @@ commands:
       usage: /<command>
    match:
       description: Create, edit or delete a match.
-      usage: /<command> create
+      usage: /<command> create/end
    hook:
       description: Hook onto a match so that other commands can be applied to that match.
       usage: /<command> [MATCHID]
    release:
       description: Removes the current hook, so that commands are no longer match-specific.
       usage: /<command>
+   round:
+      description: Create, edit or delete a round.
+      usage: /<command> create/end

@@ -58,6 +58,7 @@ public class Wp extends JavaPlugin {
 		getCommand("match").setExecutor(cmdListener);
 		getCommand("hook").setExecutor(cmdListener);
 		getCommand("release").setExecutor(cmdListener);
+		getCommand("round").setExecutor(cmdListener);
 
 	}
 	
