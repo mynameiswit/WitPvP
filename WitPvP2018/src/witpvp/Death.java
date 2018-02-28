@@ -3,11 +3,16 @@ package witpvp;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.World.Spigot;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffect;
@@ -59,16 +64,16 @@ public final class Death {
 			player.setVelocity(new Vector(0, 0, 0));
 			
 			// Draw text on screen, and update the timer
-			player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + respawnTime/20 + ChatColor.WHITE + " seconds..." , 5, respawnTime-10, 0);
+			player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + respawnTime/20 + ChatColor.WHITE + " seconds...");
 			new BukkitRunnable() {
 				int ticksRemaining = respawnTime;
 				@Override
 				public void run() {
 					if (ticksRemaining > 40) {
 						ticksRemaining -= 20;
-						player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + ticksRemaining/20 + ChatColor.WHITE + " seconds..." , 0, 21, 0);
+						player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + ticksRemaining/20 + ChatColor.WHITE + " seconds...");
 					} else {
-						player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + "1" + ChatColor.WHITE + " seconds..." , 0, 20, 5);
+						player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "You have died", ChatColor.WHITE + "Respawning in " + ChatColor.GOLD + "1" + ChatColor.WHITE + " seconds...");
 						this.cancel();
 					}
 				}
@@ -102,8 +107,6 @@ public final class Death {
 			// (REPLACE WITH REAL RESPAWN CODE LATER)
 			Location spawnLocation = player.getWorld().getSpawnLocation();
 			player.teleport(spawnLocation);
-			
-			player.playSound(player.getLocation(), Sound.ENTITY_EVOCATION_ILLAGER_CAST_SPELL, 0.5f, 1.0f);
-			
+						
 	}
 }

@@ -1,6 +1,5 @@
 package witpvp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,6 +166,28 @@ public class CommandListener implements CommandExecutor {
 					}
 				}
 				
+			} else if (cmdName.equalsIgnoreCase("charge")) {
+				if (sender instanceof Player) {
+					if (args.length == 1) {
+						PlayerProfile profile = Wp.getPlayerProfile(((Player) sender));
+						
+						try {
+							double charge = Double.parseDouble(args[0]);
+							profile.getBattleProfile().setCharge(charge);
+							
+							((Player) sender).sendMessage("Setting " + ((Player) sender).getName() + "'s charge to " + args[0] + ".");
+						} catch (NumberFormatException e) {
+							return false;
+						}
+						
+						return true;
+						
+					} else {
+						return false;
+						
+					}
+				}
+				
 			} else if (cmdName.equalsIgnoreCase("world")) {
 				if (sender instanceof Player) {
 					if (args.length == 1) {
@@ -176,6 +197,9 @@ public class CommandListener implements CommandExecutor {
 							for (World world : Bukkit.getWorlds()) {
 								((Player) sender).sendMessage(ChatColor.GRAY + world.getName());
 							}
+							
+							((Player) sender).sendMessage("List end.");
+
 							
 							return true;
 							

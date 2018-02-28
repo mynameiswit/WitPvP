@@ -20,3 +20,6 @@ commands:
    world:
       description: Teleport, load or unload world files.
       usage: /<command> teleport,load,unload
+   charge:
+      description: Set your Charge Level to a desired value.
+      usage: /<command> [INT]

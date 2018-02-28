@@ -43,7 +43,7 @@ public class Round extends Competition {
 	}
 
 	public void end() {
-		setStatus(RoundStatus.IDLE);
+		setStatus(RoundStatus.FINISHED);
 		match.setStatus(MatchStatus.BETWEEN_ROUNDS);
 
 		disableDamage();

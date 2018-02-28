@@ -23,7 +23,7 @@ public class Wp extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;		
-
+		
 		broadcast(ChatColor.YELLOW + "WitPvP core plugin enabled.");
 		
 		new GlobalListener(plugin); // create globallistener to listen for events TODO temporary
@@ -62,6 +62,7 @@ public class Wp extends JavaPlugin {
 		getCommand("release").setExecutor(cmdListener);
 		getCommand("round").setExecutor(cmdListener);
 		getCommand("world").setExecutor(cmdListener);
+		getCommand("charge").setExecutor(cmdListener);
 
 	}
 	
@@ -72,10 +73,9 @@ public class Wp extends JavaPlugin {
 		Bukkit.createWorld(new WorldCreator("desert"));
 		Bukkit.createWorld(new WorldCreator("empty"));
 		Bukkit.createWorld(new WorldCreator("islands"));
+		Bukkit.createWorld(new WorldCreator("islands2"));
 		Bukkit.createWorld(new WorldCreator("jungle"));
 		Bukkit.createWorld(new WorldCreator("main"));
-		Bukkit.createWorld(new WorldCreator("new2"));
-		Bukkit.createWorld(new WorldCreator("newmap"));
 
 	}
 	
@@ -97,7 +97,9 @@ public class Wp extends JavaPlugin {
 				return p;
 			}
 		}
-		return null;
+		PlayerProfile newProfile = new PlayerProfile(player);
+		addPlayerProfile(newProfile);
+		return newProfile;
 	}
 	
 	public static Set<Match> getMatches() {
