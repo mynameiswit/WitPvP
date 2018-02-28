@@ -83,4 +83,42 @@ public class Match extends Competition {
 		}
 		return null;
 	}
+	
+	public boolean hasActiveRound() {
+		boolean result = false;
+		
+		for (Round r : rounds) {
+			if (r.getStatus() == RoundStatus.PLAYING) {
+				result = true;
+				break;
+				
+			}
+		}
+		
+		return result;
+	}
+
+	public Round getActiveRound() {
+		if (status == MatchStatus.PLAYING_ROUND) {
+			Round activeRound = null;
+			
+			for (Round r : rounds) {
+				if (r.getStatus() == RoundStatus.PLAYING) {
+					activeRound = r;
+					break;
+					
+				}
+			}
+			
+			return activeRound;
+			
+		} else {
+			return null;
+			
+		}
+	}
+	
+	public Round getLatestRound() {
+		return rounds.get(rounds.size()-1);
+	}
 }

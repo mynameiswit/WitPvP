@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import witpvp.match.Match;
+import witpvp.match.Round;
 
 public class CommandListener implements CommandExecutor {
 	
@@ -70,6 +71,47 @@ public class CommandListener implements CommandExecutor {
 							match.newRound();
 							
 							sender.sendMessage("Started a new round in match " + match.getID() + ".");
+							return true;
+							
+						} else {
+							return false;
+							
+						}
+						
+					} else if (args[0].equalsIgnoreCase("end")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							
+							if (match.hasActiveRound()) {
+								Round round = match.getActiveRound();
+								round.end();
+								
+								sender.sendMessage("Ended active round in match " + match.getID() + ".");
+							} else {
+								sender.sendMessage("Match " + match.getID() + " does not currently have any active rounds.");
+							}
+
+							return true;
+							
+						} else {
+							return false;
+							
+						}
+						
+					} else if (args[0].equalsIgnoreCase("start")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							
+							if (match.hasActiveRound()) {
+								sender.sendMessage("Match " + match.getID() + " already has an active round.");
+								
+							} else {
+								Round round = match.getLatestRound();
+								round.start();
+								
+								sender.sendMessage("Started last created match in match " + match.getID() + ".");
+							}
+
 							return true;
 							
 						} else {
