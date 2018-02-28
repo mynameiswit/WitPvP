@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -59,6 +60,21 @@ public class Wp extends JavaPlugin {
 		getCommand("hook").setExecutor(cmdListener);
 		getCommand("release").setExecutor(cmdListener);
 		getCommand("round").setExecutor(cmdListener);
+		getCommand("world").setExecutor(cmdListener);
+
+	}
+	
+	private void loadWorlds() {
+		Bukkit.createWorld(new WorldCreator("campside"));
+		Bukkit.createWorld(new WorldCreator("cave"));
+		Bukkit.createWorld(new WorldCreator("crystal"));
+		Bukkit.createWorld(new WorldCreator("desert"));
+		Bukkit.createWorld(new WorldCreator("empty"));
+		Bukkit.createWorld(new WorldCreator("islands"));
+		Bukkit.createWorld(new WorldCreator("jungle"));
+		Bukkit.createWorld(new WorldCreator("main"));
+		Bukkit.createWorld(new WorldCreator("new2"));
+		Bukkit.createWorld(new WorldCreator("newmap"));
 
 	}
 	

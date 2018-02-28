@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -163,6 +166,58 @@ public class CommandListener implements CommandExecutor {
 						}
 					}
 				}
+				
+			} else if (cmdName.equalsIgnoreCase("world")) {
+				if (sender instanceof Player) {
+					if (args.length == 1) {
+						if (args[0].equalsIgnoreCase("list")) {
+							((Player) sender).sendMessage("Loaded world files:");
+
+							for (World world : Bukkit.getWorlds()) {
+								((Player) sender).sendMessage(ChatColor.GRAY + world.getName());
+							}
+							
+							return true;
+							
+						}
+						return false;
+					} else if (args.length == 2) {
+						if (args[0].equalsIgnoreCase("teleport")) {
+							World world = Bukkit.getWorld(args[1]);
+							
+							if (world != null) {
+								((Player) sender).teleport(world.getSpawnLocation());
+								Wp.broadcast(((Player) sender).getName() + " teleported to world " + ChatColor.GREEN + args[1] + ".");
+							}
+							
+							return true;
+							
+						} else if (args[0].equalsIgnoreCase("load")) {
+							Bukkit.createWorld(new WorldCreator(args[1]));
+							
+							((Player) sender).sendMessage("Loading world " + ChatColor.GREEN + args[1] + ".");
+							
+							return true;
+							
+						} else if (args[0].equalsIgnoreCase("unload")) {
+							if (Bukkit.getWorld(args[1]).getPlayers().isEmpty()) {
+								Bukkit.unloadWorld(args[1], true);
+								((Player) sender).sendMessage("Unloading world " + ChatColor.GREEN + args[1] + ".");
+
+							} else {
+								((Player) sender).sendMessage("Can not unload a world with players in it.");
+
+							}
+							
+							return true;
+							
+						}
+						return false;
+						
+					}
+				}
+				return false;
+		
 			} else if (cmdName.equalsIgnoreCase("hook")) {
 				if (args.length == 1) {
 					if (StringUtils.isNumeric(args[0])) {
