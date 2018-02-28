@@ -24,9 +24,11 @@ public class Round extends Competition {
 	
 	public void start() {
 		setStatus(RoundStatus.PLAYING);
+		match.setStatus(MatchStatus.PLAYING_ROUND);
+		
 		enableDamage();
 		
-		listener = new RoundListener(Wp.plugin, this);
+		listener = new RoundListener(this);
 		
 		// teleport all players to arena
 		// set correct hp
@@ -42,6 +44,8 @@ public class Round extends Competition {
 
 	public void end() {
 		setStatus(RoundStatus.IDLE);
+		match.setStatus(MatchStatus.BETWEEN_ROUNDS);
+
 		disableDamage();
 		
 		HandlerList.unregisterAll(listener);

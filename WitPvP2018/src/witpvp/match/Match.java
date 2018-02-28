@@ -62,7 +62,7 @@ public class Match extends Competition {
 	}
 	
 	public void end() {
-		
+		status = MatchStatus.FINISHED;
 	}
 	
 	private void addRound(Round round) {
@@ -99,7 +99,7 @@ public class Match extends Competition {
 	}
 
 	public Round getActiveRound() {
-		if (status == MatchStatus.PLAYING_ROUND) {
+		if (hasActiveRound()) {
 			Round activeRound = null;
 			
 			for (Round r : rounds) {

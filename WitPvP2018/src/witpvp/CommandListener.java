@@ -52,6 +52,7 @@ public class CommandListener implements CommandExecutor {
 							match.end();
 							
 							sender.sendMessage("Ended match " + match.getID() + ".");
+							
 							return true;
 							
 						} else {
@@ -70,7 +71,8 @@ public class CommandListener implements CommandExecutor {
 							Match match = getHook(sender);
 							match.newRound();
 							
-							sender.sendMessage("Started a new round in match " + match.getID() + ".");
+							sender.sendMessage("Created a new round in match " + match.getID() + ".");
+							
 							return true;
 							
 						} else {
@@ -87,8 +89,10 @@ public class CommandListener implements CommandExecutor {
 								round.end();
 								
 								sender.sendMessage("Ended active round in match " + match.getID() + ".");
+								
 							} else {
 								sender.sendMessage("Match " + match.getID() + " does not currently have any active rounds.");
+							
 							}
 
 							return true;
