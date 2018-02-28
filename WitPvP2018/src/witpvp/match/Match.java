@@ -13,12 +13,21 @@ public class Match extends Competition {
 	private List<Round> rounds = new ArrayList<>();
 	
 	private MatchSettings settings;
+	private MatchStatus status = MatchStatus.NOT_YET_STARTED;
 	
 	public Match() {
 		this.id = generateID(this);
 		this.settings = new MatchSettings();
 		
 		Wp.addMatch(this);
+	}
+	
+	public void setStatus(MatchStatus status) {
+		this.status = status;
+	}
+	
+	public MatchStatus getStatus() {
+		return status;
 	}
 
 	public Round newRound() {
