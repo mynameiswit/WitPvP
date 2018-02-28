@@ -14,6 +14,10 @@ public class GlobalListener implements Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
+	// TODO temporary for testing death system
+	// this needs to only happen for players who are in a round
+	// if someone dies in the lobby world, they should respawn instantly
+	// if someone dies in another world and is not in a match, they should also respawn instantly
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
 		Entity entity = event.getEntity();

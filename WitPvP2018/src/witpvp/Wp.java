@@ -24,8 +24,8 @@ public class Wp extends JavaPlugin {
 		plugin = this;		
 
 		broadcast(ChatColor.YELLOW + "WitPvP core plugin enabled.");
-
-		new GlobalListener(plugin); // create globallistener to listen for events
+		
+		new GlobalListener(plugin); // create globallistener to listen for events TODO temporary
 		
 		initializeCommands(); // see CommandListener
 	}
