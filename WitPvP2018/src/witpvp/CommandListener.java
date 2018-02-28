@@ -87,15 +87,16 @@ public class CommandListener implements CommandExecutor {
 					
 				}
 			}
-			
 			return false;
+			
 		}
-		
 		return false;
+		
 	}
 	
 	private Match getHook(CommandSender cmdSender) {
 		return hooks.get(cmdSender);
+		
 	}
 
 	private boolean hook(CommandSender cmdSender, int id) {
@@ -103,19 +104,24 @@ public class CommandListener implements CommandExecutor {
 		if (match != null) {
 			hooks.put(cmdSender, match);
 			return true;
+			
 		}
 		return false;
+		
 	}
 
 	private boolean isHooked(CommandSender cmdSender) {
 		if (hooks.containsKey(cmdSender)) {
 			return true;
+			
 		}
 		return false;
+		
 	}
 
 	private void release(CommandSender cmdSender) {
 		hooks.remove(cmdSender);
+		
 	}
 
 }
