@@ -16,4 +16,4 @@ commands:
       usage: /<command>
    round:
       description: Create, edit or delete a round.
-      usage: /<command> create,end,start
+      usage: /<command> create,end,start,status

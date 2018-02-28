@@ -1,6 +1,8 @@
 package witpvp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +61,24 @@ public class CommandListener implements CommandExecutor {
 							return false;
 							
 						}
+						
+					} else if (args[0].equalsIgnoreCase("status")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							sender.sendMessage("Match " + match.getID() + " - " + match.getStatus().toString());
+							
+							return true;
+							
+						} else {							
+							sender.sendMessage("Statuses of all matches:");
+							
+							for (Match m : Wp.getMatches()) {
+								sender.sendMessage(ChatColor.GRAY + "Match " + m.getID() + " - " + m.getStatus().toString());
+							}	
+							
+							return true;
+							
+						}
 					}
 				}
 			} else if (cmdName.equalsIgnoreCase("round")) {
@@ -115,6 +135,25 @@ public class CommandListener implements CommandExecutor {
 								
 								sender.sendMessage("Started last created match in match " + match.getID() + ".");
 							}
+
+							return true;
+							
+						} else {
+							return false;
+							
+						}
+						
+					} else if (args[0].equalsIgnoreCase("status")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							
+							sender.sendMessage("Statuses of all rounds in match " + match.getID() + ":");
+							
+							List<Round> rounds = match.getRounds();
+							
+							for (Round r : match.getRounds()) {
+								sender.sendMessage(ChatColor.GRAY + "Round " + Integer.toString(rounds.indexOf(r)+1) + " - " + r.getStatus().toString());
+							}	
 
 							return true;
 							
