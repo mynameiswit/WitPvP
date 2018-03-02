@@ -27,14 +27,13 @@ public class CommandListener implements CommandExecutor {
 			String cmdName = cmd.getName();
 			
 			if (cmdName.equalsIgnoreCase("test")) {
-				sender.sendMessage("yes this is a test");
 				return true;
 				
 			} else if (cmdName.equalsIgnoreCase("match")) {
 				if (args.length == 0) {
 					return false;
 					
-				} else if (args.length == 1) {
+				} else if (args.length >= 1) {
 					if (args[0].equalsIgnoreCase("create")) {
 						Match match = new Match();
 						int id = match.getID();
@@ -63,7 +62,6 @@ public class CommandListener implements CommandExecutor {
 							return false;
 							
 						}
-						
 					} else if (args[0].equalsIgnoreCase("status")) {
 						if (isHooked(sender)) {
 							Match match = getHook(sender);
@@ -78,10 +76,59 @@ public class CommandListener implements CommandExecutor {
 								sender.sendMessage(ChatColor.GRAY + "Match " + m.getID() + " - " + m.getStatus().toString());
 							}	
 							
+							sender.sendMessage("List end.");
+							
 							return true;
 							
 						}
-					}
+					} else if (args[0].equalsIgnoreCase("list")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							sender.sendMessage("Match " + match.getID() + " - Players: " + match.getPlayers().size());
+							
+							return true;
+							
+						} else {							
+							sender.sendMessage("List of all matches:");
+							
+							for (Match m : Wp.getMatches()) {
+								sender.sendMessage(ChatColor.GRAY + "Match " + m.getID() + " - Players: " + m.getPlayers().size());
+							}	
+							
+							sender.sendMessage("List end.");
+							
+							return true;
+							
+						}	
+				
+					} else if (args[0].equalsIgnoreCase("add")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							
+							if (args.length == 2) {
+								try {
+									Player target = Bukkit.getServer().getPlayer(args[1]);
+									match.addPlayer(target);
+									sender.sendMessage("Player " + target.getDisplayName() + " has been added to match " + match.getID());
+									return true;
+									
+								} catch (NullPointerException e) {
+									sender.sendMessage("That player could not be found.");
+									return false;
+											
+								}
+								
+							} else {
+								return false;
+							}
+							
+							
+						} else {							
+							sender.sendMessage("You are not hooked.");
+							return false;
+							
+						}
+					}		
 				}
 			} else if (cmdName.equalsIgnoreCase("round")) {
 				if (args.length == 0) {
@@ -135,7 +182,7 @@ public class CommandListener implements CommandExecutor {
 								Round round = match.getLatestRound();
 								round.start();
 								
-								sender.sendMessage("Started last created match in match " + match.getID() + ".");
+								sender.sendMessage("Started last created round in match " + match.getID() + ".");
 							}
 
 							return true;
@@ -156,6 +203,8 @@ public class CommandListener implements CommandExecutor {
 							for (Round r : match.getRounds()) {
 								sender.sendMessage(ChatColor.GRAY + "Round " + Integer.toString(rounds.indexOf(r)+1) + " - " + r.getStatus().toString());
 							}	
+							
+							sender.sendMessage("List end.");
 
 							return true;
 							
@@ -163,7 +212,60 @@ public class CommandListener implements CommandExecutor {
 							return false;
 							
 						}
+						
+					} else if (args[0].equalsIgnoreCase("teleport")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							Round round = match.getLatestRound();
+							
+							sender.sendMessage("Teleporting all players in match " + match.getID() + " to the map.");
+							
+							for (Player p : round.getPlayers()) {
+								round.teleportToMap(p);
+							}
+							
+							return true;
+							
+						} else {
+							return false;
+								
+						}
+						
+					} else if (args[0].equalsIgnoreCase("exit")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							Round round = match.getLatestRound();
+							
+							sender.sendMessage("Teleporting all players in match " + match.getID() + " to the lobby.");
+							
+							for (Player p : round.getPlayers()) {
+								round.teleportToLobby(p);
+							}
+							
+							return true;
+							
+						} else {
+							return false;
+								
+						}
+						
+					} else if (args[0].equalsIgnoreCase("delete")) {
+						if (isHooked(sender)) {
+							Match match = getHook(sender);
+							Round round = match.getLatestRound();
+							
+							round.destroy();
+							
+							sender.sendMessage("Deleting latest round in match " + match.getID() + ".");
+
+							return true;
+							
+						} else {
+							return false;
+								
+						}
 					}
+					
 				}
 				
 			} else if (cmdName.equalsIgnoreCase("charge")) {

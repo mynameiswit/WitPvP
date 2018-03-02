@@ -100,9 +100,7 @@ public final class Death {
 	public static void respawnPlayer(Player player) {
 			// Set to normal combat stats
 			Util.resetAttributes(player);
-			
-			//Util.showPlayer(player, player.getWorld().getPlayers());
-			
+						
 			// Teleport player to the world's spawnpoint
 			// (REPLACE WITH REAL RESPAWN CODE LATER)
 			Location spawnLocation = player.getWorld().getSpawnLocation();

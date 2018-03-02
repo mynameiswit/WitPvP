@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.entity.Player;
+
 import witpvp.Competition;
 import witpvp.Wp;
 
@@ -119,6 +121,12 @@ public class Match extends Competition {
 	}
 	
 	public Round getLatestRound() {
-		return rounds.get(rounds.size()-1);
+		if (rounds.size() > 0) {
+			return rounds.get(rounds.size()-1);
+		} else {
+			return null;
+		}
+		
 	}
+	
 }
